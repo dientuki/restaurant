@@ -14,4 +14,9 @@ class Table extends Model
         'table_number',
         'max_capacity',
     ];
+
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class, 'reservation_table');
+    }
 }
