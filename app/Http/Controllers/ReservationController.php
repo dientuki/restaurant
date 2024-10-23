@@ -1,20 +1,30 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReservationStoreRequest;
 use App\Models\Reservation;
 use App\Models\Table;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
+
+    public function index(){
+
+    }
+
     public function create()
     {
         $tables = Table::all();
         return view('reservations.create', compact('tables'));
     }
 
-    public function store(Request $request)
+    public function store(ReservationStoreRequest $request)
     {
+        $validated = $request->validated();
+
+        dd($request->reservation_date);
+
         $reservation = Reservation::create([
             'user_id' => $request->user_id,
             'reservation_date' => $request->reservation_date,

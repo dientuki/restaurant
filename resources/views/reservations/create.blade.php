@@ -9,7 +9,24 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    la reserva? crear?
+                {{ html()->form('POST', route('reservations.store'))->open() }}
+
+                {{ html()->label('Fecha')->for('reservation_date') }}
+                {{ html()->date('reservation_date')->value(date('Y-m-d')) }}
+                <br />
+                {{ html()->label('Comienzo')->for('reservation_start_time') }}
+                {{ html()->time('reservation_start_time')->attribute('step', 1800) }}
+                <br />
+                {{ html()->label('Fin')->for('reservation_end_time') }}
+                {{ html()->time('reservation_end_time')->attribute('step', 1800) }}
+                <br />
+                {{ html()->label('Personas')->for('people_count') }}
+                {{ html()->number('people_count') }}
+
+                <br />
+                {{ html()->submit('Enviar') }}
+
+                {{ html()->form()->close() }}
                 </div>
             </div>
         </div>
