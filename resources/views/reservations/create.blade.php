@@ -13,6 +13,7 @@
 
                 {{ html()->label('Fecha')->for('reservation_date') }}
                 {{ html()->date('reservation_date')->value(date('Y-m-d')) }}
+                a{{ old('reservation_start_time') }}a
                 @error('reservation_date')
                     <div class="invalid-feedback">
                     <strong>{{ $message }}</strong>
