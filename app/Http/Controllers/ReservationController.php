@@ -15,8 +15,8 @@ class ReservationController extends Controller
 
     public function create()
     {
-        $tables = Table::all();
-        return view('reservations.create', compact('tables'));
+        //$tables = Table::all();
+        return view('reservations.create');
     }
 
     public function store(ReservationStoreRequest $request)

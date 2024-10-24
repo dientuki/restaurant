@@ -13,15 +13,35 @@
 
                 {{ html()->label('Fecha')->for('reservation_date') }}
                 {{ html()->date('reservation_date')->value(date('Y-m-d')) }}
+                @error('reservation_date')
+                    <div class="invalid-feedback">
+                    <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
                 <br />
                 {{ html()->label('Comienzo')->for('reservation_start_time') }}
                 {{ html()->time('reservation_start_time')->attribute('step', 1800) }}
+                @error('reservation_start_time')
+                    <div class="invalid-feedback">
+                    <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
                 <br />
                 {{ html()->label('Fin')->for('reservation_end_time') }}
                 {{ html()->time('reservation_end_time')->attribute('step', 1800) }}
+                @error('reservation_end_time')
+                    <div class="invalid-feedback">
+                    <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
                 <br />
                 {{ html()->label('Personas')->for('people_count') }}
                 {{ html()->number('people_count') }}
+                @error('people_count')
+                    <div class="invalid-feedback">
+                    <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <br />
                 {{ html()->submit('Enviar') }}
