@@ -12,7 +12,7 @@
                 {{ html()->form('POST', route('reservations.store'))->open() }}
 
                 {{ html()->label('Fecha')->for('reservation_date') }}
-                {{ html()->date('reservation_date')->value(date('Y-m-d')) }}
+                {{ html()->date('reservation_date')->value(old('reservation_date', date('Y-m-d'))) }}
                 a{{ old('reservation_start_time') }}a
                 @error('reservation_date')
                     <div class="invalid-feedback">

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\ReservationDurationValidator;
 use App\Rules\ReservationStartTimeValidator;
+use App\Rules\ReservationTimeValidator;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,11 +27,16 @@ class ReservationStoreRequest extends FormRequest
     {
         return [
             'reservation_date' => ['required', 'date'],
-            'reservation_start_time' => ['required', 'date_format:H:i'],
+            'reservation_start_time' => [
+                'required',
+                'date_format:H:i',
+                new ReservationTimeValidator($this->input('reservation_date'))
+            ],
             'reservation_end_time' => [
                 'required',
                 'date_format:H:i',
-                new ReservationDurationValidator($this->input('reservation_start_time'))
+                new ReservationDurationValidator($this->input('reservation_start_time'), $this->input('reservation_date')),
+                new ReservationTimeValidator($this->input('reservation_date'))
             ],
             'people_count' => ['required', 'integer', 'min:1'],
         ];

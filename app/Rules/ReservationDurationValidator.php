@@ -8,11 +8,13 @@ use Carbon\Carbon;
 
 class ReservationDurationValidator implements ValidationRule
 {
-    protected string $reservationStartTime;
+    protected ?string $reservationStartTime;
+    protected ?string $reservationDate;
 
-    public function __construct(string $reservationStartTime)
+    public function __construct(?string $reservationStartTime, ?string $reservationDate)
     {
         $this->reservationStartTime = $reservationStartTime;
+        $this->reservationDate = $reservationDate;
     }
 
     /**
@@ -24,13 +26,26 @@ class ReservationDurationValidator implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+
+        if (is_null($this->reservationStartTime) || is_null($this->reservationDate)) {
+            $fail('Los tiempos de reserva son obligatorios.');
+            return;
+        }
+
         try {
-            //dd($this->reservationStartTime);
             $startTime = Carbon::createFromFormat('H:i', $this->reservationStartTime);
             $endTime = Carbon::createFromFormat('H:i', $value);
 
+            // Si la fecha de reserva es sábado, permitir reservas entre las 22:00 y 02:00
+            if (Carbon::parse($this->reservationDate)->dayOfWeek == 6) {
+                if ($startTime->greaterThan($endTime)) {
+                    // Si el tiempo de inicio es mayor que el de fin, se asume que la reserva cruza la medianoche
+                    $endTime->addDay(); // Aumentar el día al final
+                }
+            }
+
             // Verificar que el tiempo de finalización sea al menos 1 hora y 45 minutos mayor que el de inicio
-            if ($endTime->diffInMinutes($startTime) < 105) {
+            if ($startTime->diffInMinutes($endTime) < 105) {
                 $fail('La hora de finalización debe ser al menos 1 hora y 45 minutos mayor que la hora de inicio.');
             }
         } catch (\Exception $e) {

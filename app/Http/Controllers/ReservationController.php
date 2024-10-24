@@ -16,6 +16,7 @@ class ReservationController extends Controller
     public function create()
     {
         //$tables = Table::all();
+        //dd(old('reservation_start_time'));
         return view('reservations.create');
     }
 
@@ -23,7 +24,8 @@ class ReservationController extends Controller
     {
         $validated = $request->validated();
 
-        dd($request->reservation_date);
+        dd('aca');
+
 
         $reservation = Reservation::create([
             'user_id' => $request->user_id,
