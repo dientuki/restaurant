@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Enum\Location;
 use App\Http\Requests\ReservationStoreRequest;
+use App\Http\Requests\SearchDateRequest;
 use App\Models\Reservation;
 use App\Models\Table;
 use Carbon\Carbon;
@@ -12,12 +13,14 @@ use Illuminate\Support\Facades\Cache;
 class ReservationController extends Controller
 {
 
-    public function show(){
-        $dia = '2024-10-25';
+    public function index(){
+        return view('reservations.show');
+    }
 
-        $reservations = Reservation::getReservationsWithTablesByDate($dia);
+    public function show(SearchDateRequest $request){
+        $validatedData = $request->validated();
 
-        //dd($reservations);
+        $reservations = Reservation::getReservationsWithTablesByDate($validatedData['date']);
 
         return view('reservations.show', compact('reservations'));
     }
