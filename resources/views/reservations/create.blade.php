@@ -14,7 +14,7 @@
 
                         <div>
                             <div class="flex gap-2 items-center justify-between w-full">
-                                {{ html()->label('Fecha')->for('reservation_date')->class('w-1/4 text-right pr-2') }}
+                                {{ html()->label(__('field.reservation_date'))->for('reservation_date')->class('w-1/4 text-right pr-2') }}
                                 {{ html()->date('reservation_date')->value(old('reservation_date', date('Y-m-d')))->class('w-3/4 form-input border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500') }}
                             </div>
                             @error('reservation_date')
@@ -27,7 +27,7 @@
 
                         <div>
                             <div class="flex gap-2 items-center justify-between w-full">
-                                {{ html()->label('Comienzo')->for('reservation_start_time')->class('w-1/4 text-right pr-2') }}
+                                {{ html()->label(__('field.reservation_start_time'))->for('reservation_start_time')->class('w-1/4 text-right pr-2') }}
                                 {{ html()->time('reservation_start_time')->attribute('step', 1800)->class('w-3/4 form-input border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500') }}
                             </div>
                             @error('reservation_start_time')
@@ -39,7 +39,7 @@
 
                         <div>
                             <div class="flex gap-2 items-center justify-between w-full">
-                                {{ html()->label('Fin')->for('reservation_end_time')->class('w-1/4 text-right pr-2') }}
+                                {{ html()->label(__('field.reservation_end_time'))->for('reservation_end_time')->class('w-1/4 text-right pr-2') }}
                                 {{ html()->time('reservation_end_time')->attribute('step', 1800)->class('w-3/4 form-input border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500') }}
                             </div>
                             @error('reservation_end_time')
@@ -51,7 +51,7 @@
 
                         <div>
                             <div class="flex gap-2 items-center justify-between w-full">
-                                {{ html()->label('Personas')->for('people_count')->class('w-1/4 text-right pr-2') }}
+                                {{ html()->label(__('field.people_count'))->for('people_count')->class('w-1/4 text-right pr-2') }}
                                 {{ html()->number('people_count')->class('w-3/4 form-input border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500') }}
                             </div>
                             @error('people_count')
@@ -61,7 +61,7 @@
                             @enderror
                         </div>
 
-                        {{ html()->submit('Enviar')->class('font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 border border-black') }}
+                        {{ html()->submit(__('button.submit'))->class('font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 border border-black') }}
 
                         {{ html()->form()->close() }}
                     </div>
@@ -83,7 +83,6 @@
     </div>
 
     @if(isset($hasReservation))
-
         @if($hasReservation && $reservation)
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
