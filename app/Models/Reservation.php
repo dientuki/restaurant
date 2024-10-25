@@ -26,4 +26,21 @@ class Reservation extends Model
     {
         return $this->belongsToMany(Table::class, 'reservation_table');
     }
+
+    public static function getReservationsWithTablesByDate($date)
+    {
+        return self::with('tables')
+            ->where('reservation_date', $date)
+            ->get()
+            ->map(function ($reservation) {
+                return [
+                    'reservation_date' => $reservation->reservation_date,
+                    'reservation_start_time' => $reservation->reservation_start_time,
+                    'reservation_end_time' => $reservation->reservation_end_time,
+                    'people_count' => $reservation->people_count,
+                    'location' => $reservation->tables->first()->location ?? null,
+                    'tables' => $reservation->tables->pluck('table_number')->implode(', '),
+                ];
+            });
+    }
 }

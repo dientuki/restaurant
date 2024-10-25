@@ -11,8 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class ReservationController extends Controller
 {
 
-    public function index(){
+    public function show(){
+        $dia = '2024-10-25';
 
+        $reservations = Reservation::getReservationsWithTablesByDate($dia);
+
+        //dd($reservations);
+
+        return view('reservations.show', compact('reservations'));
     }
 
     public function create()
