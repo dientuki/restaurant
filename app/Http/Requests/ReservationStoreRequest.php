@@ -18,6 +18,16 @@ class ReservationStoreRequest extends FormRequest
         return true;
     }
 
+    public function attributes(): array
+    {
+        return [
+            'reservation_date' => __('field.reservation_date'),
+            'reservation_start_time' => __('field.reservation_start_time'),
+            'reservation_end_time' => __('field.reservation_end_time'),
+            'people_count' => __('field.people_count'),
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
