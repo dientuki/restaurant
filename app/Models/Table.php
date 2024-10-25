@@ -19,4 +19,12 @@ class Table extends Model
     {
         return $this->belongsToMany(Reservation::class, 'reservation_table');
     }
+
+    public static function getUniqueMaxCapacities()
+    {
+        return self::select('max_capacity')
+            ->distinct()
+            ->pluck('max_capacity')
+            ->toArray();
+    }
 }
