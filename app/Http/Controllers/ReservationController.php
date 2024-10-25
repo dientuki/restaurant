@@ -24,9 +24,7 @@ class ReservationController extends Controller
 
     public function create()
     {
-        $hasReservation = false;
-        $reservation = null;
-        return view('reservations.create', compact('reservation', 'hasReservation'));
+        return view('reservations.create');
     }
 
     public function store(ReservationStoreRequest $request)
