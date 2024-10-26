@@ -66,14 +66,12 @@ class ReservationTimeValidator implements ValidationRule
                 $endTimestamp = $end->timestamp;
                 $timeTimestamp = $time->timestamp;
 
+                //dd($startTimestamp, $endTimestamp, $timeTimestamp);
+
                 // Verificamos si $time está dentro del rango
-                if (!($timeTimestamp >= $startTimestamp || $timeTimestamp <= $endTimestamp)) {
+                if (!($timeTimestamp >= $startTimestamp && $timeTimestamp <= $endTimestamp)) {
                     $fail(__('validation.day.saturday', ['attribute' => $attribute]));
                 }
-                break;
-
-            default:
-                $fail(__('validation.day.invalid', ['attribute' => $attribute]));
                 break;
         }
     }
