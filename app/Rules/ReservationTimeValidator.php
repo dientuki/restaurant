@@ -36,12 +36,7 @@ class ReservationTimeValidator implements ValidationRule
 
         switch ($dayOfWeek) {
             case DayOfWeek::Sunday->value:
-                $start = Carbon::createFromTime(12, 0, 0); // 12:00
-                $end = Carbon::createFromTime(16, 0, 0); // 16:00
-
-                if (!$time->between($start, $end)) {
-                    $fail(__('validation.day.sunday', ['attribute' => $attribute]));
-                }
+                $this->validateSunday($time, $fail, $attribute);
                 break;
 
             case DayOfWeek::Monday->value:
@@ -49,29 +44,11 @@ class ReservationTimeValidator implements ValidationRule
             case DayOfWeek::Wednesday->value:
             case DayOfWeek::Thursday->value:
             case DayOfWeek::Friday->value:
-                $start = Carbon::createFromTime(10, 0, 0); // 10:00
-                $end = Carbon::createFromTime(23, 59, 59); // 24:00
-
-                if (!$time->between($start, $end)) {
-                    $fail(__('validation.day.weekday', ['attribute' => $attribute]));
-                }
+                $this->validateWeekday($time, $fail, $attribute);
                 break;
 
             case DayOfWeek::Saturday->value:
-                $start = Carbon::createFromTime(22, 0, 0); // 22:00
-                $end = Carbon::createFromTime(2, 0, 0)->addDay(); // 02:00 del día siguiente
-
-                // Convertimos a timestamps
-                $startTimestamp = $start->timestamp;
-                $endTimestamp = $end->timestamp;
-                $timeTimestamp = $time->timestamp;
-
-                //dd($startTimestamp, $endTimestamp, $timeTimestamp);
-
-                // Verificamos si $time está dentro del rango
-                if (!($timeTimestamp >= $startTimestamp && $timeTimestamp <= $endTimestamp)) {
-                    $fail(__('validation.day.saturday', ['attribute' => $attribute]));
-                }
+                $this->validateSaturday($time, $fail, $attribute);
                 break;
         }
     }
@@ -89,4 +66,41 @@ class ReservationTimeValidator implements ValidationRule
             ? Carbon::createFromFormat('H:i', $timeString)
             : Carbon::createFromFormat('H:i:s', $timeString);
     }
+
+    private function validateSunday($time, Closure $fail, string $attribute): void
+    {
+        $start = Carbon::createFromTime(12, 0, 0); // 12:00
+        $end = Carbon::createFromTime(16, 0, 0); // 16:00
+
+        if (!$time->between($start, $end)) {
+            $fail(__('validation.day.sunday', ['attribute' => $attribute]));
+        }
+    }
+
+    private function validateWeekday($time, Closure $fail, string $attribute): void
+    {
+        $start = Carbon::createFromTime(10, 0, 0); // 10:00
+        $end = Carbon::createFromTime(23, 59, 59); // 24:00
+
+        if (!$time->between($start, $end)) {
+            $fail(__('validation.day.weekday', ['attribute' => $attribute]));
+        }
+    }
+
+    private function validateSaturday($time, Closure $fail, string $attribute): void
+    {
+        $start = Carbon::createFromTime(22, 0, 0); // 22:00
+        $end = Carbon::createFromTime(2, 0, 0)->addDay(); // 02:00 del día siguiente
+
+        // Convertimos a timestamps
+        $startTimestamp = $start->timestamp;
+        $endTimestamp = $end->timestamp;
+        $timeTimestamp = $time->timestamp;
+
+        // Verificamos si $time está dentro del rango
+        if (!($timeTimestamp >= $startTimestamp && $timeTimestamp <= $endTimestamp)) {
+            $fail(__('validation.day.saturday', ['attribute' => $attribute]));
+        }
+    }
+
 }
