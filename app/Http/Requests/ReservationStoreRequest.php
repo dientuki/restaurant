@@ -45,7 +45,10 @@ class ReservationStoreRequest extends FormRequest
             'reservation_end_time' => [
                 'required',
                 'date_format:H:i',
-                new ReservationDurationValidator($this->input('reservation_start_time'), $this->input('reservation_date')),
+                new ReservationDurationValidator(
+                    $this->input('reservation_start_time'),
+                    $this->input('reservation_date')
+                ),
                 new ReservationTimeValidator($this->input('reservation_date'))
             ],
             'people_count' => ['required', 'integer', 'min:1'],
@@ -57,12 +60,14 @@ class ReservationStoreRequest extends FormRequest
         if ($this->reservation_start_time) {
             try {
                 $this->merge([
-                    'reservation_start_time' => Carbon::createFromFormat('H:i:s', trim($this->reservation_start_time))->format('H:i'),
+                    'reservation_start_time' =>
+                        Carbon::createFromFormat('H:i:s', trim($this->reservation_start_time))->format('H:i'),
                 ]);
             } catch (\Carbon\Exceptions\InvalidFormatException $e) {
                 // Si hay un error, intenta con H:i
                 $this->merge([
-                    'reservation_start_time' => Carbon::createFromFormat('H:i', trim($this->reservation_start_time))->format('H:i'),
+                    'reservation_start_time' =>
+                        Carbon::createFromFormat('H:i', trim($this->reservation_start_time))->format('H:i'),
                 ]);
             }
         }
@@ -70,11 +75,13 @@ class ReservationStoreRequest extends FormRequest
         if ($this->reservation_end_time) {
             try {
                 $this->merge([
-                    'reservation_end_time' => Carbon::createFromFormat('H:i:s', trim($this->reservation_end_time))->format('H:i'),
+                    'reservation_end_time' =>
+                        Carbon::createFromFormat('H:i:s', trim($this->reservation_end_time))->format('H:i'),
                 ]);
             } catch (\Carbon\Exceptions\InvalidFormatException $e) {
                 $this->merge([
-                    'reservation_end_time' => Carbon::createFromFormat('H:i', trim($this->reservation_end_time))->format('H:i'),
+                    'reservation_end_time' =>
+                        Carbon::createFromFormat('H:i', trim($this->reservation_end_time))->format('H:i'),
                 ]);
             }
         }

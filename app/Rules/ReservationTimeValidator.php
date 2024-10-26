@@ -102,5 +102,4 @@ class ReservationTimeValidator implements ValidationRule
             $fail(__('validation.day.saturday', ['attribute' => $attribute]));
         }
     }
-
 }

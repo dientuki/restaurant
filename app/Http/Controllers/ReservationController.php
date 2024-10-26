@@ -41,7 +41,12 @@ class ReservationController extends Controller
         $reservationEndTime = $validatedData['reservation_end_time'];
         $peopleCount = $validatedData['people_count'];
 
-        $tables = $this->findAvailableTables($reservationDate, $reservationStartTime, $reservationEndTime, $peopleCount);
+        $tables = $this->findAvailableTables(
+            $reservationDate,
+            $reservationStartTime,
+            $reservationEndTime,
+            $peopleCount
+        );
 
         $hasReservation = false;
         $reservation = null;
@@ -131,18 +136,25 @@ class ReservationController extends Controller
             // Buscar mesas libres en la ubicación
             $cacheKey = "available_tables_{$location}_date_{$reservationDate}_start_{$realStartTime}_end_{$endTime}";
 
-            $tables = Cache::remember($cacheKey, 60, function () use ($location, $reservationDate, $realStartTime, $endTime) {
-                return Table::where('location', $location)
-                    ->whereDoesntHave('reservations', function ($query) use ($reservationDate, $realStartTime, $endTime) {
-                        $query->where('reservation_date', $reservationDate)
-                            ->where(function ($q) use ($realStartTime, $endTime) {
-                                $q->whereBetween('reservation_start_time', [$realStartTime, $endTime])
-                                ->orWhereBetween('reservation_end_time', [$realStartTime, $endTime]);
-                            });
-                    })
-                    ->orderBy('max_capacity') // Ordenar mesas de menor a mayor
-                    ->get();
-            });
+            $tables = Cache::remember(
+                $cacheKey,
+                60,
+                function () use ($location, $reservationDate, $realStartTime, $endTime) {
+                    return Table::where('location', $location)
+                    ->whereDoesntHave(
+                        'reservations',
+                        function ($query) use ($reservationDate, $realStartTime, $endTime) {
+                            $query->where('reservation_date', $reservationDate)
+                                ->where(function ($q) use ($realStartTime, $endTime) {
+                                    $q->whereBetween('reservation_start_time', [$realStartTime, $endTime])
+                                    ->orWhereBetween('reservation_end_time', [$realStartTime, $endTime]);
+                                });
+                        }
+                    )
+                     ->orderBy('max_capacity') // Ordenar mesas de menor a mayor
+                     ->get();
+                }
+            );
 
             // Verificar las combinaciones de mesas y buscar las disponibles
             foreach ($combinations as $combination) {
