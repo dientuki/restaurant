@@ -5,6 +5,7 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Carbon\Carbon;
+use DayOfWeek;
 
 class ReservationTimeValidator implements ValidationRule
 {
@@ -23,18 +24,18 @@ class ReservationTimeValidator implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (is_null($this->reservationDate)) {
-            $fail('La fecha es obligatoria.');
+            $fail(__('validation.required'));
             return;
         }
 
         // Llamar al método para crear el objeto Carbon
         $time = $this->createCarbonFromTime($value);
 
-        // Obtener el día de la semana como número (0 = Domingo, 6 = Sábado)
-        $dayOfWeek = Carbon::parse($this->reservationDate)->dayOfWeek;
+        // Obtiene el día de la semana como un string (por ejemplo, "Monday", "Tuesday")
+        $dayOfWeek = Carbon::parse($this->reservationDate)->format('l');
 
         switch ($dayOfWeek) {
-            case 0: // Domingo
+            case DayOfWeek::Sunday->value:
                 $start = Carbon::createFromTime(12, 0, 0); // 12:00
                 $end = Carbon::createFromTime(16, 0, 0); // 16:00
 
@@ -43,11 +44,11 @@ class ReservationTimeValidator implements ValidationRule
                 }
                 break;
 
-            case 1: // Lunes
-            case 2: // Martes
-            case 3: // Miércoles
-            case 4: // Jueves
-            case 5: // Viernes
+            case DayOfWeek::Monday->value:
+            case DayOfWeek::Tuesday->value:
+            case DayOfWeek::Wednesday->value:
+            case DayOfWeek::Thursday->value:
+            case DayOfWeek::Friday->value:
                 $start = Carbon::createFromTime(10, 0, 0); // 10:00
                 $end = Carbon::createFromTime(23, 59, 59); // 24:00
 
@@ -56,7 +57,7 @@ class ReservationTimeValidator implements ValidationRule
                 }
                 break;
 
-            case 6: // Sábado
+            case DayOfWeek::Saturday->value:
                 $start = Carbon::createFromTime(22, 0, 0); // 22:00
                 $end = Carbon::createFromTime(2, 0, 0)->addDay(); // 02:00 del día siguiente
 
