@@ -1,4 +1,4 @@
-name: Syntax
+name: Lint and Test
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
         uses: olivernybroe/action-conflict-finder@v4.0
   php_syntax_check:
     runs-on: ubuntu-latest
-    name: PHP Syntax
+    name: PHP Linter
     needs: [find_merge_conflicts]
     steps:
       # Checkout the source code so there are some files to look at.
@@ -56,7 +56,7 @@ jobs:
 
   laravel_test:
     runs-on: ubuntu-latest
-    name: Run Laravel Tests
+    name: Laravel Tests
     needs: [find_merge_conflicts]
     steps:
       # Checkout del código fuente
