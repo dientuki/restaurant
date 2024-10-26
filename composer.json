@@ -60,6 +60,7 @@
         "linter": [
             "composer phpcbf",
             "composer phpcs",
+            "composer phpmd",
             "composer phpstan",
             "composer phpmnd"
         ],
