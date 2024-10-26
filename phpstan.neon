@@ -22,4 +22,4 @@ parameters:
 		-
 			message: "#This view is not used in the project.#"
 			paths:
-				- resources/views/filament/
+				- resources/views/components/
