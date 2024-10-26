@@ -23,7 +23,6 @@ class TableSeeder extends Seeder
             $tables = random_int(3, 9);
 
             for ($i = 1; $i <= $tables; $i++) {
-
                 DB::table('tables')->insert([
                     'id' => (string) Str::ulid(),
                     'location' => $locationCase->value,
@@ -36,6 +35,5 @@ class TableSeeder extends Seeder
                 $count++;
             }
         }
-
     }
 }

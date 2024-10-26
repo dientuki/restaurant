@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Enum\Location;
@@ -12,12 +13,13 @@ use Illuminate\Support\Facades\Cache;
 
 class ReservationController extends Controller
 {
-
-    public function index(){
+    public function index()
+    {
         return view('reservations.show');
     }
 
-    public function show(SearchDateRequest $request){
+    public function show(SearchDateRequest $request)
+    {
         $validatedData = $request->validated();
 
         $reservations = Reservation::getReservationsWithTablesByDate($validatedData['date']);
@@ -81,7 +83,7 @@ class ReservationController extends Controller
         $uniqueResults = array_values($uniqueResults);
 
         // Ordenar las combinaciones por la suma de sus elementos
-        usort($uniqueResults, function($a, $b) {
+        usort($uniqueResults, function ($a, $b) {
             return array_sum($a) <=> array_sum($b); // Ordenar de menor a mayor
         });
 
@@ -175,7 +177,4 @@ class ReservationController extends Controller
         // Si no hay suficientes mesas, devolver null
         return null;
     }
-
-
-
 }
