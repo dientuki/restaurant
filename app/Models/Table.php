@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 
 class Table extends Model
@@ -17,7 +17,7 @@ class Table extends Model
         'max_capacity',
     ];
 
-    public function reservations()
+    public function reservations(): BelongsToMany
     {
         return $this->belongsToMany(Reservation::class, 'reservation_table');
     }

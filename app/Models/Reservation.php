@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Reservation extends Model
 {
@@ -17,12 +19,12 @@ class Reservation extends Model
         'people_count',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function tables()
+    public function tables(): BelongsToMany
     {
         return $this->belongsToMany(Table::class, 'reservation_table');
     }
