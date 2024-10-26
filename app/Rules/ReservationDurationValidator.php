@@ -28,9 +28,11 @@ class ReservationDurationValidator implements ValidationRule
     {
 
         if (is_null($this->reservationStartTime) || is_null($this->reservationDate)) {
-            $fail('Los tiempos de reserva son obligatorios.');
+            $fail(__('validation.both_required'));
             return;
         }
+
+        $minTime = 105; //1 hora y 45 minutos en minutos
 
         try {
             $startTime = Carbon::createFromFormat('H:i', $this->reservationStartTime);
@@ -45,11 +47,11 @@ class ReservationDurationValidator implements ValidationRule
             }
 
             // Verificar que el tiempo de finalización sea al menos 1 hora y 45 minutos mayor que el de inicio
-            if ($startTime->diffInMinutes($endTime) < 105) {
-                $fail('La hora de finalización debe ser al menos 1 hora y 45 minutos mayor que la hora de inicio.');
+            if ($startTime->diffInMinutes($endTime) < $minTime) {
+                $fail(__('validation.min_time', ['attribute' => $attribute]));
             }
         } catch (\Exception $e) {
-            $fail('El formato de hora no es válido.');
+            $fail(__('validation.date_format'));
         }
     }
 }

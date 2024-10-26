@@ -172,9 +172,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+        'both_required' => 'Los tiempos de reserva son obligatorios.',
+        'min_time' => 'La :attribute debe ser al menos 1 hora y 45 minutos mayor que la hora de inicio.',
     ],
 
     /*
@@ -189,25 +188,7 @@ return [
     */
 
     'attributes' => [
-        'customer' => [
-            'firstname' => 'Nombre',
-            'lastname' => 'Apellido',
-            'email' => 'Email',
-            'phone' => 'Telefono',
-        ],
-        'device' => [
-            'commercialname' => 'Nombre comercial',
-            'techname' => 'Nombre tecnico',
-            'brandid' => 'Marca',
-            'typeid' => 'Tipo de equipo',
-            'url' => 'Url',
-        ],
-        'deviceunit' => [
-            'serial' => 'Serial',
-            'unlocktype' => 'Tipo de desbloqueo',
-            'unlockcode' => 'Codigo de desbloqueo',
-            'deviceid' => 'Equipo',
-        ]
+
     ],
 
 ];
