@@ -80,7 +80,7 @@ jobs:
 
       # Configurar Node.js
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20  # Cambia esto a la versión que necesites
 
@@ -108,13 +108,11 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
-      # Instalar dependencias
-      - name: Install Dependencies
-        run: npm install
-
       # Ejecutar los tests de React
       - name: Compile frontend assets
-        run: npm run build
+        run: |
+          npm install
+          npm run build
 
       # Ejecutar los tests de Laravel
       - name: Run Laravel Tests
