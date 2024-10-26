@@ -82,7 +82,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Cambia esto a la versión que necesites
+          node-version: 20  # Cambia esto a la versión que necesites
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
@@ -113,7 +113,7 @@ jobs:
         run: npm install
 
       # Ejecutar los tests de React
-      - name: Run React Tests
+      - name: Compile frontend assets
         run: npm run build
 
       # Ejecutar los tests de Laravel
