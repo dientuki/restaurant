@@ -2,10 +2,10 @@
 
 namespace App\Rules;
 
+use App\Enum\DayOfWeek;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Carbon\Carbon;
-use DayOfWeek;
 
 class ReservationTimeValidator implements ValidationRule
 {
@@ -40,7 +40,7 @@ class ReservationTimeValidator implements ValidationRule
                 $end = Carbon::createFromTime(16, 0, 0); // 16:00
 
                 if (!$time->between($start, $end)) {
-                    $fail("La hora debe estar entre 12:00 y 16:00 el domingo.");
+                    $fail(__('validation.day.sunday', ['attribute' => $attribute]));
                 }
                 break;
 
@@ -53,7 +53,7 @@ class ReservationTimeValidator implements ValidationRule
                 $end = Carbon::createFromTime(23, 59, 59); // 24:00
 
                 if (!$time->between($start, $end)) {
-                    $fail("La hora debe estar entre 10:00 y 24:00 de lunes a viernes.");
+                    $fail(__('validation.day.weekday', ['attribute' => $attribute]));
                 }
                 break;
 
@@ -68,12 +68,12 @@ class ReservationTimeValidator implements ValidationRule
 
                 // Verificamos si $time está dentro del rango
                 if (!($timeTimestamp >= $startTimestamp || $timeTimestamp <= $endTimestamp)) {
-                    $fail("La hora debe estar entre 22:00 del sábado y 02:00 del día siguiente.");
+                    $fail(__('validation.day.saturday', ['attribute' => $attribute]));
                 }
                 break;
 
             default:
-                $fail("El día de la semana no es válido.");
+                $fail(__('validation.day.invalid', ['attribute' => $attribute]));
                 break;
         }
     }

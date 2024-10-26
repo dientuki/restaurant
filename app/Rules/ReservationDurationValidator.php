@@ -2,10 +2,10 @@
 
 namespace App\Rules;
 
+use App\Enum\DayOfWeek;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Carbon\Carbon;
-use DayOfWeek;
 
 class ReservationDurationValidator implements ValidationRule
 {
@@ -39,7 +39,7 @@ class ReservationDurationValidator implements ValidationRule
             $startTime = Carbon::createFromFormat('H:i', $this->reservationStartTime);
             $endTime = Carbon::createFromFormat('H:i', $value);
 
-            // Si la fecha de reserva es sábado, permitir reservas entre las 22:00 y 02:00
+            // Si la fecha de reserva es sábado, permitir reservas entre las 22:00 y 02:
             if (Carbon::parse($this->reservationDate)->format('l') == DayOfWeek::Saturday->value) {
                 if ($startTime->greaterThan($endTime)) {
                     // Si el tiempo de inicio es mayor que el de fin, se asume que la reserva cruza la medianoche
