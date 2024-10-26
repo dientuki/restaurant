@@ -1,36 +1,24 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Sistema de reservas para Restaurant
 
 ## Tabla de Contenidos
 
-1. [Sistema de reservas para Restaurant](#sistema-de-reservas-para-restaurant)
-   - [Requisitos del Sistema](#requisitos-del-sistema)
-     - [ABM de Mesas](#abm-de-mesas)
-     - [Login/Registro de Usuarios](#loginregistro-de-usuarios)
-     - [Solicitud de Reserva](#solicitud-de-reserva)
-     - [Gestión de Disponibilidad](#gestión-de-disponibilidad)
-     - [Listado de Reservas](#listado-de-reservas)
-   - [Tecnologías a Utilizar](#tecnologías-a-utilizar)
+[Sistema de reservas para Restaurant](#sistema-de-reservas-para-restaurant)
+   1. [Requisitos del Sistema](#requisitos-del-sistema)
+      - [ABM de Mesas](#abm-de-mesas)
+      - [Login/Registro de Usuarios](#loginregistro-de-usuarios)
+      - [Solicitud de Reserva](#solicitud-de-reserva)
+      - [Gestión de Disponibilidad](#gestión-de-disponibilidad)
+      - [Listado de Reservas](#listado-de-reservas)
+   2. [Instalación](#instalación)
+      - [Sail](#sail)
+      - [Migraciones](#migraciones)
+        - [Mesas](#mesas)
+        - [Usuarios](#usuarios)
+      - [Sistema](#sistema)
+   3. [Tooling](#tooling)
+      - [PHP Linters](#php-linters)
+      - [Testing](#testing)
 
-2. [Instalación](#instalación)
-   - [Sail](#sail)
-   - [Migraciones](#migraciones)
-     - [Mesas](#mesas)
-     - [Usuarios](#usuarios)
-   - [Sistema](#sistema)
-
-3. [Tooling](#tooling)
-   - [PHP Linters](#php-linters)
-   - [Testing](#testing)
-
-
-# Sistema de reservas para Restaurant
 
 **Objetivo**: Desarrollar un minisistema de reservas para un restaurante que permita gestionar mesas, usuarios y reservas de manera eficiente.
 
