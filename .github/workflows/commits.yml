@@ -78,6 +78,20 @@ jobs:
         with:
           php-version: '8.3'
 
+      # Configurar Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # Cambia esto a la versión que necesites
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm  # Ruta donde npm guarda la caché
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}-
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
@@ -93,6 +107,14 @@ jobs:
         run: |
           mkdir -p database
           touch database/database.sqlite
+
+      # Instalar dependencias
+      - name: Install Dependencies
+        run: npm install
+
+      # Ejecutar los tests de React
+      - name: Run React Tests
+        run: npm run build
 
       # Ejecutar los tests de Laravel
       - name: Run Laravel Tests
