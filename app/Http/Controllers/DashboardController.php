@@ -10,14 +10,9 @@ class DashboardController extends Controller
 {
     public function index(DashboardRequest $request)
     {
-        if ($request->isMethod('post')) {
-            $validatedData = $request->validated();
-            $date = $validatedData['date'];
-            $time = $validatedData['time'] . ':00';
-        } else {
-            $date = now()->toDateString();
-            $time = $this->roundToNearestHalfHour(now());
-        }
+        $validatedData = $request->isMethod('post') ? $request->validated() : [];
+        $date = $validatedData['date'] ?? now()->toDateString();
+        $time = !empty($validatedData['time']) ? $validatedData['time'] . ':00' : $this->roundToNearestHalfHour(now());
 
         $tables = Table::getStatusForDateTime($date, $time);
 
@@ -30,12 +25,7 @@ class DashboardController extends Controller
         $hours = $time->format('H');
         $minutes = $time->format('i');
 
-        // Redondea los minutos
-        if ($minutes < 30) {
-            $roundedMinutes = 0; // Redondea a la hora completa
-        } else {
-            $roundedMinutes = 30; // Redondea a la media hora
-        }
+        $roundedMinutes = $minutes < 30 ? 0 : 30;
 
         // Crea una nueva hora redondeada
         return $time->setTime($hours, $roundedMinutes)->format('H:i');

@@ -38,7 +38,7 @@ class DashboardRequest extends FormRequest
     {
         return [
             'date' => __('field.date'),
-            'date' => __('field.time')
+            'time' => __('field.time')
         ];
     }
 }
