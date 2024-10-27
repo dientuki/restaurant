@@ -107,7 +107,7 @@ Hay instalados varios linters de PHP para revisar el codigo y encontrar bugs ant
 - **[PHP Mess Detector](https://phpmd.org/):** Ayuda a encontrar posibles bugs (mas orientado a sintaxis), codigo a mejorar, expresiones complicadas y codigo/variables sin uso.
 - **[PHP CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer):** Ayuda mejorar la legibilidad del codigo.
 - **[PHP Stan](https://phpstan.org/):** Ayuda a encontrar posibles que PHP Mess Detector puede no encontrar (mas orientado a logica).
-- **[PHP Magic Number Detector](https://github.com/povils/phpmnd):** Evita que se usen numeros (o string) "al azar" en el codigo forzando a que sean constantes o variables, por ejemplo, en lugar de hacer `$http_status === 400` deberiamos hacer `$http_status === CodeNotFound`. Ayuda a mejorar la legibilidad.
+- **[PHP Magic Number Detector](https://github.com/povils/phpmnd):** Evita que se usen numeros (o string) "al azar" en el codigo forzando a que sean constantes o variables, por ejemplo, en lugar de hacer `$http_status === 400` deberiamos hacer `$http_status === HttpStatus::NotFound->value`. Ayuda a mejorar la legibilidad.
 
 #### Testing
 
