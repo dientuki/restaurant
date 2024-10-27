@@ -13,7 +13,7 @@ class ReservationDurationValidatorTest extends TestCase
         $rule = new ReservationDurationValidator(null, '2024-10-28');
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.both_required'), $message);
+            $this->assertEquals(__('validation.custom.both_required'), $message);
         };
 
         $rule->validate('reservation_end_time', '10:00', $fail);
@@ -24,7 +24,7 @@ class ReservationDurationValidatorTest extends TestCase
         $rule = new ReservationDurationValidator('10:00', null);
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.both_required'), $message);
+            $this->assertEquals(__('validation.custom.both_required'), $message);
         };
 
         $rule->validate('reservation_end_time', '10:00', $fail);
@@ -35,7 +35,7 @@ class ReservationDurationValidatorTest extends TestCase
         $rule = new ReservationDurationValidator('10:00', '2024-10-28');
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.min_time', ['attribute' => 'reservation_end_time']), $message);
+            $this->assertEquals(__('validation.custom.min_time', ['attribute' => 'reservation_end_time']), $message);
         };
 
         // Duración es solo 1 hora
@@ -73,7 +73,7 @@ class ReservationDurationValidatorTest extends TestCase
         $rule = new ReservationDurationValidator('10:00', 'invalid-date');
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.date_format'), $message);
+            $this->assertEquals(__('validation.custom.date_format'), $message);
         };
 
         $rule->validate('reservation_end_time', '11:00', $fail);

@@ -12,7 +12,7 @@ class ReservationTimeValidatorTest extends TestCase
         $rule = new ReservationTimeValidator(null);
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.required'), $message);
+            $this->assertEquals(__('validation.custom.required'), $message);
         };
 
         $rule->validate('reservation_time', '10:00', $fail);
@@ -23,7 +23,7 @@ class ReservationTimeValidatorTest extends TestCase
         $rule = new ReservationTimeValidator('2024-10-27'); // Domingo
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.day.sunday', ['attribute' => 'reservation_time']), $message);
+            $this->assertEquals(__('validation.custom.day.sunday', ['attribute' => 'reservation_time']), $message);
         };
 
         // Hora fuera del rango permitido (fuera de 12:00 - 16:00)
@@ -48,7 +48,7 @@ class ReservationTimeValidatorTest extends TestCase
         $rule = new ReservationTimeValidator('2024-10-29'); // Martes
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.day.weekday', ['attribute' => 'reservation_time']), $message);
+            $this->assertEquals(__('validation.custom.day.weekday', ['attribute' => 'reservation_time']), $message);
         };
 
         // Hora fuera del rango permitido (fuera de 10:00 - 23:59)
@@ -73,7 +73,7 @@ class ReservationTimeValidatorTest extends TestCase
         $rule = new ReservationTimeValidator('2024-10-26'); // Sábado
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.day.saturday', ['attribute' => 'reservation_time']), $message);
+            $this->assertEquals(__('validation.custom.day.saturday', ['attribute' => 'reservation_time']), $message);
         };
 
         // Hora fuera del rango permitido (fuera de 22:00 - 02:00)

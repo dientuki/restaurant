@@ -24,7 +24,8 @@ class DashboardController extends Controller
         return view('dashboard', compact('tables', 'date', 'time'));
     }
 
-    private function roundToNearestHalfHour($time) {
+    private function roundToNearestHalfHour($time)
+    {
         // Obtiene la hora y minutos
         $hours = $time->format('H');
         $minutes = $time->format('i');

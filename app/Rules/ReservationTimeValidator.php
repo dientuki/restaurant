@@ -102,8 +102,9 @@ class ReservationTimeValidator implements ValidationRule
     {
         $start = $time->copy()->setHour(22)->setMinute(0);
         $end = $time->copy()->addDay()->setHour(2)->setMinute(0); // 02:00 del día siguiente
+        $early = $time->copy()->setHour(22)->setMinute(0);
 
-        if ($time->lte(Carbon::createFromTime(2, 0, 0))) {
+        if ($time->isBefore($early)) {
             $time->addday();
         }
 
