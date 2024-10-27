@@ -36,6 +36,8 @@ class ReservationController extends Controller
     {
         $validatedData = $request->validated();
 
+        dd($validatedData);
+
         $reservationDate = $validatedData['reservation_date'];
         $reservationStartTime = $validatedData['reservation_start_time'];
         $reservationEndTime = $validatedData['reservation_end_time'];

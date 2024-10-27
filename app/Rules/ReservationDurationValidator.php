@@ -29,7 +29,7 @@ class ReservationDurationValidator implements ValidationRule
     {
 
         if (is_null($this->reservationStartTime) || is_null($this->reservationDate)) {
-            $fail(__('validation.both_required'));
+            $fail(__('validation.custom.both_required'));
             return;
         }
 
@@ -45,14 +45,18 @@ class ReservationDurationValidator implements ValidationRule
                     // Si el tiempo de inicio es mayor que el de fin, se asume que la reserva cruza la medianoche
                     $endTime->addDay(); // Aumentar el día al final
                 }
+            } else {
+                if ($endTime->hour === 0 && $endTime->minute === 0 && $endTime->second === 0) {
+                    $endTime->addDay(); // Sumar un día si la hora es 00:00:00
+                }
             }
 
             // Verificar que el tiempo de finalización sea al menos 1 hora y 45 minutos mayor que el de inicio
             if ($startTime->diffInMinutes($endTime) < $minTime) {
-                $fail(__('validation.min_time', ['attribute' => $attribute]));
+                $fail(__('validation.custom.min_time', ['attribute' => $attribute]));
             }
         } catch (\Exception $e) {
-            $fail(__('validation.date_format'));
+            $fail(__('validation.custom.date_format'));
         }
     }
 }

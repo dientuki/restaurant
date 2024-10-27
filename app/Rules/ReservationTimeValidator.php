@@ -24,12 +24,14 @@ class ReservationTimeValidator implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (is_null($this->reservationDate)) {
-            $fail(__('validation.required'));
+            $fail(__('validation.custom.required'));
             return;
         }
 
         // Llamar al método para crear el objeto Carbon
         $time = $this->createCarbonFromTime($value);
+
+        //dd($time);
 
         // Obtiene el día de la semana como un string (por ejemplo, "Monday", "Tuesday")
         $dayOfWeek = Carbon::parse($this->reservationDate)->format('l');
@@ -61,45 +63,53 @@ class ReservationTimeValidator implements ValidationRule
      */
     private function createCarbonFromTime(string $timeString): Carbon
     {
-        // Verifica si el tiempo tiene segundos y crea el objeto Carbon apropiadamente
-        return strpos($timeString, ':') === false || substr_count($timeString, ':') === 1
+        // Crea un objeto Carbon a partir de la hora
+        $reservationDate = Carbon::createFromFormat('Y-m-d', $this->reservationDate);
+
+        $time = strpos($timeString, ':') === false || substr_count($timeString, ':') === 1
             ? Carbon::createFromFormat('H:i', $timeString)
             : Carbon::createFromFormat('H:i:s', $timeString);
+
+        // Combina la fecha de la reserva con la hora creada
+        return $time->setDate($reservationDate->year, $reservationDate->month, $reservationDate->day);
     }
 
     private function validateSunday($time, Closure $fail, string $attribute): void
     {
-        $start = Carbon::createFromTime(12, 0, 0); // 12:00
-        $end = Carbon::createFromTime(16, 0, 0); // 16:00
+        $start = $time->copy()->setHour(12)->setMinute(0);
+        $end = $time->copy()->setHour(16)->setMinute(0);
 
         if (!$time->between($start, $end)) {
-            $fail(__('validation.day.sunday', ['attribute' => $attribute]));
+            $fail(__('validation.custom.day.sunday', ['attribute' => $attribute]));
         }
     }
 
     private function validateWeekday($time, Closure $fail, string $attribute): void
     {
-        $start = Carbon::createFromTime(10, 0, 0); // 10:00
-        $end = Carbon::createFromTime(23, 59, 59); // 24:00
+        $start = $time->copy()->setHour(10)->setMinute(0);
+        $end = $time->copy()->addDay()->setHour(0)->setMinute(0);
+
+        if ($time->hour === 0 && $time->minute === 0 && $time->second === 0) {
+            $time->addDay(); // Sumar un día si la hora es 00:00:00
+        }
 
         if (!$time->between($start, $end)) {
-            $fail(__('validation.day.weekday', ['attribute' => $attribute]));
+            $fail(__('validation.custom.day.weekday', ['attribute' => $attribute]));
         }
     }
 
     private function validateSaturday($time, Closure $fail, string $attribute): void
     {
-        $start = Carbon::createFromTime(22, 0, 0); // 22:00
-        $end = Carbon::createFromTime(2, 0, 0)->addDay(); // 02:00 del día siguiente
+        $start = $time->copy()->setHour(22)->setMinute(0);
+        $end = $time->copy()->addDay()->setHour(2)->setMinute(0); // 02:00 del día siguiente
 
-        // Convertimos a timestamps
-        $startTimestamp = $start->timestamp;
-        $endTimestamp = $end->timestamp;
-        $timeTimestamp = $time->timestamp;
+        if ($time->lte(Carbon::createFromTime(2, 0, 0))) {
+            $time->addday();
+        }
 
         // Verificamos si $time está dentro del rango
-        if (!($timeTimestamp >= $startTimestamp && $timeTimestamp <= $endTimestamp)) {
-            $fail(__('validation.day.saturday', ['attribute' => $attribute]));
+        if (!$time->between($start, $end)) {
+            $fail(__('validation.custom.day.saturday', ['attribute' => $attribute]));
         }
     }
 }

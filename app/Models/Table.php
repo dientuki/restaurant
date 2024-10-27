@@ -32,14 +32,6 @@ class Table extends Model
 
     public static function getStatusForDateTime($date = null, $time = null)
     {
-        DB::enableQueryLog();
-
-        // Si $date es null, usar la fecha actual
-        //$date = '2014-10-25'; // ? Carbon::parse($date)->toDateString() : now()->toDateString();
-
-        // Si $time es null, usar la hora actual
-        //$time = '11:00:00'; // ? Carbon::parse($time)->toTimeString() : now()->toTimeString();
-
         $tables = DB::select("SELECT
             tables.id,
             tables.location,
@@ -68,6 +60,5 @@ class Table extends Model
         ORDER BY tables.table_number;");
 
         return $tables;
-        //dd($tables);
     }
 }
