@@ -21,11 +21,12 @@ class DashboardController extends Controller
 
     private function roundToNearestHalfHour($time)
     {
+        $halfHour = 30;
         // Obtiene la hora y minutos
         $hours = $time->format('H');
         $minutes = $time->format('i');
 
-        $roundedMinutes = $minutes < 30 ? 0 : 30;
+        $roundedMinutes = $minutes < $halfHour ? 0 : $halfHour;
 
         // Crea una nueva hora redondeada
         return $time->setTime($hours, $roundedMinutes)->format('H:i');
