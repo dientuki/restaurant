@@ -33,6 +33,46 @@ class Table extends Model
     public static function getStatusForDateTime($date = null, $time = null)
     {
         $tables = DB::select("SELECT
+                    t.id,
+                    t.table_number,
+                    t.location,
+                    t.max_capacity,
+                    CASE
+                        WHEN COUNT(r.id) > 0 THEN 'ocupada'
+                        ELSE 'libre'
+                    END AS estado,
+                    MAX(r.reservation_end_time) AS hasta_hora_ocupada, -- Hora de finalización más reciente
+                    MIN(next_reservation.reservation_start_time) AS proxima_reserva -- Hora de la próxima reserva
+                FROM
+                    tables t
+                LEFT JOIN
+                    reservation_table rt ON t.id = rt.table_id
+                LEFT JOIN
+                    reservations r ON rt.reservation_id = r.id
+                    AND r.reservation_date = '$date' -- Fecha de la reserva
+                    AND (
+                        (r.reservation_start_time < '$time' AND r.reservation_end_time > '$time') -- Intervalo de tiempo
+                    )
+                LEFT JOIN (
+                    SELECT
+                        rt2.table_id,
+                        r2.reservation_start_time
+                    FROM
+                        reservation_table rt2
+                    JOIN
+                        reservations r2 ON rt2.reservation_id = r2.id
+                    WHERE
+                        r2.reservation_date = '$date' -- Fecha de la reserva
+                        AND r2.reservation_start_time > '$time' -- Horario de consulta
+                ) AS next_reservation ON t.id = next_reservation.table_id
+                GROUP BY
+                    t.id, t.table_number, t.location
+                ORDER BY
+                    t.table_number;
+                ");
+
+        /*
+        $tables = DB::select("SELECT
             tables.id,
             tables.location,
             tables.table_number,
@@ -58,7 +98,7 @@ class Table extends Model
         GROUP BY tables.id, tables.location, tables.table_number,
             tables.max_capacity, estado, reservations.reservation_end_time
         ORDER BY tables.table_number;");
-
+        */
         return $tables;
     }
 }
