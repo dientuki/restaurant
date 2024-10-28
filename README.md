@@ -14,14 +14,15 @@
       - [Migraciones](#migraciones)
         - [Mesas](#mesas)
         - [Usuarios](#usuarios)
-      - [Sistema](#sistema)
-        - [DashBoard](#dashboard)
-        - [Crear Reservaciones](#crear-reservaciones)
-        - [Mostrar Reservaciones](#mostrar-reservaciones)
+   3. [Sistema](#sistema)
+      - [DashBoard](#dashboard)
+      - [Crear Reservaciones](#crear-reservaciones)
+      - [Mostrar Reservaciones](#mostrar-reservaciones)
       - [Asignacion de mesas](#asignacion-de-mesas)
-   3. [Tooling](#tooling)
+   4. [Tooling](#tooling)
       - [PHP Linters](#php-linters)
       - [Testing](#testing)
+   5. [Github Actions](#github-actions)
 
 
 **Objetivo**: Desarrollar un minisistema de reservas para un restaurante que permita gestionar mesas, usuarios y reservas de manera eficiente.
@@ -96,19 +97,19 @@ El seed de las meses creara entre 3 y 9 mesas por ubicacion con una capacidad po
 #### Usuarios
 El sistema tiene 2 usuarios, admin1@gmail.com y admin2@gmail.com ambos con la clave 1234.
 
-### Sistema
+## Sistema
 
 Para entrar al sistema debemos ir a http://localhost/dashboard
 
-#### DashBoard
+### DashBoard
 
 Aqui podremos ver el estado actual de las mesas, hasta cuando es la reserva y cuando es la proxima reserva, tambien podremos buscar por fecha y hora
 
-#### Crear Reservaciones
+### Crear Reservaciones
 
 Aqui podremos crear reservas
 
-#### Mostrar Reservaciones
+### Mostrar Reservaciones
 
 Aqui podremos buscar las reservas por fechas
 
@@ -121,9 +122,9 @@ Esto se hace en 2 partes:
 - Primero un helper al cual le paso numero de comensales, capacidades de las mesas y hasta cuantas puedo unir y me retorna un array con las posibles combinaciones de valores (Este helper tiene tests para validar su funcionamiento).
 - Se itera sobre cada ubicacion buscando las mesas disponibles y corroborando si alguna combinacion de esas mesas coincide con el valor retornado por el helper.
 
-### Tooling
+## Tooling
 
-#### PHP Linters
+### PHP Linters
 
 Comando: `sail composer linter`
 
@@ -134,8 +135,13 @@ Hay instalados varios linters de PHP para revisar el codigo y encontrar bugs ant
 - **[PHP Stan](https://phpstan.org/):** Ayuda a encontrar posibles que PHP Mess Detector puede no encontrar (mas orientado a logica).
 - **[PHP Magic Number Detector](https://github.com/povils/phpmnd):** Evita que se usen numeros (o string) "al azar" en el codigo forzando a que sean constantes o variables, por ejemplo, en lugar de hacer `$http_status === 400` deberiamos hacer `$http_status === HttpStatus::NotFound->value`. Ayuda a mejorar la legibilidad.
 
-#### Testing
+### Testing
 
 Comando: `sail composer test`
 
 Corre los test en php que hay en el sistema.
+
+## Github Actions
+
+Utilizo Github Actions para correr el tooling en el server cada vez que se hace un push en el branch "main", si hay algun problema envia un mail avisando.
+Tambien Anañi dependabot para buscar actualizaciones de paquetes de manera semanal
