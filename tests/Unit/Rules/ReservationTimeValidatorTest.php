@@ -12,7 +12,7 @@ class ReservationTimeValidatorTest extends TestCase
         $rule = new ReservationTimeValidator(null);
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.custom.required'), $message);
+            $this->assertEquals('validation.custom.required', $message);
         };
 
         $rule->validate('reservation_time', '10:00', $fail);

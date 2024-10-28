@@ -80,7 +80,7 @@ class ReservationTimeValidator implements ValidationRule
         $end = $time->copy()->setHour(16)->setMinute(0);
 
         if (!$time->between($start, $end)) {
-            $fail(__('validation.custom.day.sunday', ['attribute' => $attribute]));
+            $fail(__('validation.custom.day.sunday'));;
         }
     }
 
@@ -94,7 +94,7 @@ class ReservationTimeValidator implements ValidationRule
         }
 
         if (!$time->between($start, $end)) {
-            $fail(__('validation.custom.day.weekday', ['attribute' => $attribute]));
+            $fail(__('validation.custom.day.weekday'));
         }
     }
 
@@ -110,7 +110,7 @@ class ReservationTimeValidator implements ValidationRule
 
         // Verificamos si $time está dentro del rango
         if (!$time->between($start, $end)) {
-            $fail(__('validation.custom.day.saturday', ['attribute' => $attribute]));
+            $fail(__('validation.custom.day.saturday'));
         }
     }
 }

@@ -40,7 +40,7 @@ class ReservationDurationValidator implements ValidationRule
             $endTime = $this->adjustEndTime($startTime, $endTime);
 
             if ($this->isDurationTooShort($startTime, $endTime, $minTime)) {
-                $fail(__('validation.custom.min_time', ['attribute' => $attribute]));
+                $fail(__('validation.custom.min_time'));
             }
         } catch (\Exception $e) {
             $fail(__('validation.custom.date_format'));

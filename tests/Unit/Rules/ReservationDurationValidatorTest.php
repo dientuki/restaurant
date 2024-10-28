@@ -13,7 +13,7 @@ class ReservationDurationValidatorTest extends TestCase
         $rule = new ReservationDurationValidator(null, '2024-10-28');
 
         $fail = function ($message) {
-            $this->assertEquals(__('validation.custom.both_required'), $message);
+            $this->assertEquals('validation.custom.both_required', $message);
         };
 
         $rule->validate('reservation_end_time', '10:00', $fail);

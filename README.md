@@ -144,4 +144,4 @@ Corre los test en php que hay en el sistema.
 ## Github Actions
 
 Utilizo Github Actions para correr el tooling en el server cada vez que se hace un push en el branch "main", si hay algun problema envia un mail avisando.
-Tambien Anañi dependabot para buscar actualizaciones de paquetes de manera semanal
+Tambien añadi dependabot para buscar actualizaciones de paquetes de manera semanal

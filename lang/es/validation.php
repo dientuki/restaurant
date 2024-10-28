@@ -173,7 +173,7 @@ return [
 
     'custom' => [
         'both_required' => 'Los tiempos de reserva son obligatorios.',
-        'min_time' => 'La :attribute debe ser al menos 1 hora y 45 minutos mayor que la hora de inicio.',
+        'min_time' => 'El :attribute debe ser al menos 1 hora y 45 minutos mayor que la hora de inicio.',
         'day' => [
             'weekday' => 'La :attribute debe estar entre 10:00 y 24:00 de lunes a viernes.',
             'sunday' => 'La :attribute debe estar entre 12:00 y 16:00 el domingo',
