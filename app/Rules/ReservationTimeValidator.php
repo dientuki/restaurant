@@ -20,6 +20,7 @@ class ReservationTimeValidator implements ValidationRule
      * Run the validation rule.
      *
      * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
@@ -38,7 +39,7 @@ class ReservationTimeValidator implements ValidationRule
 
         switch ($dayOfWeek) {
             case DayOfWeek::Sunday->value:
-                $this->validateSunday($time, $fail, $attribute);
+                $this->validateSunday($time, $fail);
                 break;
 
             case DayOfWeek::Monday->value:
@@ -46,11 +47,11 @@ class ReservationTimeValidator implements ValidationRule
             case DayOfWeek::Wednesday->value:
             case DayOfWeek::Thursday->value:
             case DayOfWeek::Friday->value:
-                $this->validateWeekday($time, $fail, $attribute);
+                $this->validateWeekday($time, $fail);
                 break;
 
             case DayOfWeek::Saturday->value:
-                $this->validateSaturday($time, $fail, $attribute);
+                $this->validateSaturday($time, $fail);
                 break;
         }
     }
@@ -74,17 +75,18 @@ class ReservationTimeValidator implements ValidationRule
         return $time->setDate($reservationDate->year, $reservationDate->month, $reservationDate->day);
     }
 
-    private function validateSunday($time, Closure $fail, string $attribute): void
+    private function validateSunday($time, Closure $fail): void
     {
         $start = $time->copy()->setHour(12)->setMinute(0);
         $end = $time->copy()->setHour(16)->setMinute(0);
 
         if (!$time->between($start, $end)) {
-            $fail(__('validation.custom.day.sunday'));;
+            $fail(__('validation.custom.day.sunday'));
+            ;
         }
     }
 
-    private function validateWeekday($time, Closure $fail, string $attribute): void
+    private function validateWeekday($time, Closure $fail): void
     {
         $start = $time->copy()->setHour(10)->setMinute(0);
         $end = $time->copy()->addDay()->setHour(0)->setMinute(0);
@@ -98,7 +100,7 @@ class ReservationTimeValidator implements ValidationRule
         }
     }
 
-    private function validateSaturday($time, Closure $fail, string $attribute): void
+    private function validateSaturday($time, Closure $fail): void
     {
         $start = $time->copy()->setHour(22)->setMinute(0);
         $end = $time->copy()->addDay()->setHour(2)->setMinute(0); // 02:00 del día siguiente

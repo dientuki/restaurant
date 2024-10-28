@@ -51,7 +51,7 @@ class ReservationStoreRequest extends FormRequest
                 ),
                 new ReservationTimeValidator($this->input('reservation_date'))
             ],
-            'people_count' => ['required', 'integer', 'min:1'],
+            'people_count' => ['required', 'integer', 'min:1', 'max:18'],
         ];
     }
 

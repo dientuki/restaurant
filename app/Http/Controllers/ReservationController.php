@@ -72,7 +72,6 @@ class ReservationController extends Controller
         }
 
 
-
         return view('reservations.create', compact('reservation', 'hasReservation', 'canReserve'));
     }
 

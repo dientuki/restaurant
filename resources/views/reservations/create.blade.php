@@ -52,7 +52,7 @@
                         <div>
                             <div class="flex gap-2 items-center justify-between w-full">
                                 {{ html()->label(__('field.people_count'))->for('people_count')->class('w-1/4 text-right pr-2') }}
-                                {{ html()->number('people_count')->class('w-3/4 form-input border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500') }}
+                                {{ html()->number('people_count')->value(old('people_count'))->class('w-3/4 form-input border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500') }}
                             </div>
                             @error('people_count')
                                 <div class="text-red-500 text-sm col-span-2 pl-1 mt-1">
@@ -106,7 +106,11 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             <div class="alert alert-danger">
-                                No se puede hacer la reserva en ese horario para esa fecha.
+                                @if($canReserve == false)
+                                    Las personas execedan la capacidad de las mesas.
+                                @else
+                                    No se puede hacer la reserva en ese horario para esa fecha.
+                                @endif
                             </div>
                         </div>
                     </div>
