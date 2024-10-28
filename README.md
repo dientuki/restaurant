@@ -15,6 +15,10 @@
         - [Mesas](#mesas)
         - [Usuarios](#usuarios)
       - [Sistema](#sistema)
+        - [DashBoard](#dashboard)
+        - [Crear Reservaciones](#crear-reservaciones)
+        - [Mostrar Reservaciones](#mostrar-reservaciones)
+      - [Asignacion de mesas](#asignacion-de-mesas)
    3. [Tooling](#tooling)
       - [PHP Linters](#php-linters)
       - [Testing](#testing)
@@ -95,6 +99,27 @@ El sistema tiene 2 usuarios, admin1@gmail.com y admin2@gmail.com ambos con la cl
 ### Sistema
 
 Para entrar al sistema debemos ir a http://localhost/dashboard
+
+#### DashBoard
+
+Aqui podremos ver el estado actual de las mesas, hasta cuando es la reserva y cuando es la proxima reserva, tambien podremos buscar por fecha y hora
+
+#### Crear Reservaciones
+
+Aqui podremos crear reservas
+
+#### Mostrar Reservaciones
+
+Aqui podremos buscar las reservas por fechas
+
+### Asignacion de mesas
+
+El sistema busca asignar las mesas buscando optimizar utilizar el menor numero de mesas posibles y la mas cercana a lo que el comensal necesita.
+Por ejemplo, si vienen 2 comensales, buscara primero una mesa de 2 personas, luego de 4 y luego de 6 (teniendo en cuenta el requisito de primero buscar en el salon A, luego el B y asi).
+
+Esto se hace en 2 partes:
+- Primero un helper al cual le paso numero de comensales, capacidades de las mesas y hasta cuantas puedo unir y me retorna un array con las posibles combinaciones de valores (Este helper tiene tests para validar su funcionamiento).
+- Se itera sobre cada ubicacion buscando las mesas disponibles y corroborando si alguna combinacion de esas mesas coincide con el valor retornado por el helper.
 
 ### Tooling
 
